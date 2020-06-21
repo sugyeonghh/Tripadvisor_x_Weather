@@ -21,4 +21,9 @@ for line in html_review_list:
     text = line.get_text()
     review_list.append(text)
 
-print(review_list)
+for i in range(len(review_list)):
+    review_list[i] = review_list[i].replace("방문 날짜", "")
+# print(review_list)
+
+df = pd.DataFrame(review_list)
+print(df)
