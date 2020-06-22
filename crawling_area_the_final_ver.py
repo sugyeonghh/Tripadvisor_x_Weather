@@ -96,8 +96,9 @@ for place in place_list:
 
         driver.get(url)
         time.sleep(1)
-        driver.find_element_by_xpath('//div[@class="_36B4Vw6t"]').click()
-        time.sleep(1)
+        if driver.find_element_by_xpath('//div[@class="_36B4Vw6t"]'):
+            driver.find_element_by_xpath('//div[@class="_36B4Vw6t"]').click()
+            time.sleep(1)
 
 
         html = driver.page_source
