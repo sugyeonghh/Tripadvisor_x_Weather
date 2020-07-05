@@ -7,7 +7,9 @@ rc('font', family='Han Santteut Dotum')
 
 place_list = [
     # beach
-    '용머리 해안','함덕 서우봉 해변','협재 해수욕장','월정리해변','중문 색달 해변'
+    # '용머리 해안','함덕 서우봉 해변','협재 해수욕장',
+    '월정리해변'
+    # ,'중문 색달 해변'
     # '금능해수욕장','김녕 성세기 해변','광치기 해변','세화 해수욕장','광치기 해변',
     # '이호테우해변','표선해비치해변','곽지해수욕장','소금막해변','삼양 검은모래 해변',
     # '산호해수욕장',
@@ -23,25 +25,12 @@ place_list = [
 ]
 type_list = ['친구와 여행함','나 혼자 여행함','가족과 여행함','커플로 여행함']
 
-month_info = []
-
-
-def plot(date_month_list,trip_type_list):
-    ax1 = plt.subplot(131)
-    graph1 = plt.hist(date_month_list, range=(1,13), bins=12)
-    if plt.hist(trip_type_list):
-        ax2 = plt.subplot(132)
-        graph1 = plt.hist(trip_type_list)
-    plt.title(place)
-
-    # plt.show()
-    plt.savefig(place+'.png')
 
 for place in place_list:
     f = open('./_data/place/'+place+'.csv', 'r', encoding='utf-8')
     data = pd.read_csv(f)
-    location = [list(data['location'])[0]]
-    rating = [list(data['rating'])[0]]
+    location = data['location']
+    rating = data['rating']
     area_name = [place]
 
     feature_date = data['date']
@@ -76,31 +65,12 @@ for place in place_list:
     for trip_type in range(4):
         type_count.append(trip_type_list.count(trip_type))
 
-    plot(date_month_list,trip_type_list)
+    ax1 = plt.subplot(131)
+    graph1 = plt.hist(date_month_list, range=(1,13), bins=12)
+    ax2 = plt.subplot(132)
+    graph1 = plt.hist(trip_type_list)
+    plt.title(place)
 
+    plt.show()
+    # plt.savefig(place+'.png')
 
-    """
-    # the most traveled month
-    month_index = []
-    month_max = max(month_count)
-    
-    for i, v in enumerate(month_count):
-        if v == month_max:
-            month_index.append(i)
-    
-    print(place,",",month_index)
-    
-    
-    area_name_df = pd.DataFrame({'area name':area_name})
-    location_df = pd.DataFrame({'location':location})
-    rating_df = pd.DataFrame({'rating':rating})
-    month_df = pd.DataFrame({'month':month_index})
-
-    month_info.append(pd.concat([area_name_df,location_df,rating_df,month_df], axis=1))
-    add_df = month_info
-
-
-merge_data = pd.concat(month_info, axis = 0, ignore_index = True)
-merge_data.to_csv('area_data_with_most_visited_month.csv', index = False)
-
-"""
